@@ -1,0 +1,147 @@
+@(goals: List[Goal], goalForm: Form[Goal])
+
+<html lang="en">
+  <head>
+        <title>Acompanhando Metas</title>
+        <goal charset="UTF-8">
+        <goal name=description content="">
+        <goal http-equiv="X-UA-Compatible" content="IE=edge">
+        <goal name="viewport" content="width=device-width, initial-scale=1.0">
+        <goal name="author" content="">
+              <!-- Bootstrap core CSS -->
+        <link href="@routes.Assets.at("css/bootstrap.min.css")" rel="stylesheet">
+            <!-- Custom styles for this template -->
+        <link href="@routes.Assets.at("css/cover.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("css/main.css")" rel="stylesheet">
+    </head>
+
+  <body>
+
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h1 class="cover-heading">Acompanhando Metas</h1>
+                        <br><br><br>
+
+    <div class="col-sm-4 col-sm-offset-1">
+                    <br>
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h4 class="panel-title"><strong>Adicionar Nova Meta</strong><h4></div>
+                        <div class="panel-body">
+                            <form method="post" action="/goals">
+                                <label for="goal"> Meta: </label>
+                                <input type="text" name="goal" id="inputName" class="form-control"required="required">
+                                <label for="description"> Descrição: </label>
+                                <input type="text" name="description" id="inputDescription" class="form-control"required="required">
+                                <label for="relevance"> Duração (em semanas): </label>
+                                <select class="form-control" name="date">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                </select>
+                                <label for="relevance"> Nível de Prioridade: </label>
+                                <select class="form-control" name="relevance">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                                <br><br>
+                                <input type="submit" class="btn btn-success" value="Criar">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <div class="col-sm-5 col-sm-offset-1">
+                <h2 class="text-center">Meta(s) Programadas</h2>
+                <div class="table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Meta</th>
+                                <th>Descrição</th>
+                                <th>Semana </th>
+                                <th>Prioridade</th>
+                                <th>  </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(goal <- goals) {
+                            @if(!goal.getAchieved()) {
+                                <tr id=@goal.getId()>
+                                    <td>@goal.getName()</td>
+                                    <td>@goal.getDescription()</td>
+                                    <td>@goal.getDate()</td>
+                                    <td>@goal.getPriority()</td>
+                                    <td>
+                                        <form method="post" action="@routes.Application.updateGoal(goal.getId())">
+                                            <button type="submit" id="move" class="btn btn-xs">
+                                                <span class="glyphicon glyphicon-ok"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="@routes.Application.deleteGoal(goal.getId())">
+                                            <button class="btn btn-xs" id="remover">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Meta</th>
+                                    <th>Descrição</th>
+                                    <th>Semana </th>
+                                    <th>Prioridade</th>
+                                    <th>  </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <br> <h2 class="text-center">Meta(s) Finalizadas</h2> <br>
+                            @for(goal <- goals) {
+                                @if(goal.getAchieved()) {
+                                <tr id=@goal.getId()>
+                                    <td>@goal.getName()</td>
+                                    <td>@goal.getDescription()</td>
+                                    <td>@goal.getDate()</td>
+                                    <td>@goal.getPriority()</td>
+                                    <td>
+                                        <form method="post" action="@routes.Application.deleteGoal(goal.getId())">
+                                            <button class="btn btn-xs" id="remover">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("js/script.js")"></script>
+    @*<script src="assets/js/script.js"></script>*@
+  </body>
+</html>
