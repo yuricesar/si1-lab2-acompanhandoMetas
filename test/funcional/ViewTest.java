@@ -2,18 +2,12 @@ package funcional;
 
 import base.AbstractTest;
 import models.Goal;
-import org.junit.Before;
 import org.junit.Test;
-import play.api.mvc.Result;
 import play.data.Form;
 import play.twirl.api.Html;
-import scala.tools.cmd.Meta;
 import views.html.index;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.*;
 
